@@ -1,0 +1,70 @@
+<style>
+    .modal-add-edit-popup {
+        min-width: 60%;
+        max-width: 80%;
+    }
+
+    .k-widget.k-dropdown.ng-invalid.ng-dirty > span {
+        border-color: red;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="vm.cancel()">
+        <span>&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{{vm.title}}</h4>
+</div>
+
+<div class="modal-body s-modal-body" id="modal-body" style="margin-bottom:0px;padding-bottom:0px; ">
+<div class="panel-group panel-group-continuous" id="Accordion1" aria-multiselectable="true" role="tablist">
+    <div class="steps row" aria-multiselectable="true" role="tablist">
+          <div ng-class="vm.collapseClasses[vm.collapse1]">
+            <span class="step-number">1</span>
+            <div class="step-desc">
+              <span class="step-title">Company</span>
+              <p>Company Details</p>
+            </div>
+          </div>
+          <div ng-class="vm.collapseClasses[vm.collapse2]">
+            <span class="step-number">2</span>
+            <div class="step-desc">
+              <span class="step-title">Contacts</span>
+              <p>Contacts</p>
+            </div>
+          </div>
+      </div>
+      <div class="panel-collapse collapse in" id="Collapse1" aria-labelledby="Heading1" role="tabpanel">
+          <div class="panel-body" style="padding-top:0px; padding-bottom: 0px;">
+              <company-edit-inline
+                  form="vm.companyForm"
+                  next="vm.next1()"
+                  data="vm.dataItem"></company-edit-inline>
+          </div>
+      </div>
+      <div class="panel-collapse collapse" id="Collapse2" aria-labelledby="Heading2" role="tabpanel">
+          <div class="panel-body" style="padding: 15px !important;">
+              <div class="row" ng-show="vm.isCannotSaveContacts">
+                  <div class=" alert alert-danger">
+                      Please finish editing the contacts table before continuing.
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-12">
+                      <contacts-grid-inline grid="vm.grid" api="vm.contactsAPI" company-id="vm.dataItem.id" height="400"></contacts-grid-inline>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="modal-footer s-modal-footer">
+    <div class="form-group pull-right">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+        <button type="button" class="btn btn-default" ng-click="vm.prev()" ng-hide="vm.NextClick">Prev</button>
+        <input type="submit" form="CompanyForm" id="next" ng-show="vm.NextClick" value="Next" class="btn btn-primary" />
+        <button type="button" class="btn btn-primary" ng-disabled="vm.form.$invalid" ng-hide="vm.NextClick" ng-click="vm.save()">{{vm.LabelApply}}</button>
+        <button type="button" class="btn btn-warning" ng-show="vm.companyId>0" ng-click="vm.remove()">Remove</button>
+    </div>
+</div>
